@@ -4,48 +4,49 @@ const session = localStorage.getItem("session");
 
 checkLogged();
 
-//LOGAR SISTEMA
+
+//logar no sistema
 document.getElementById("login-form").addEventListener("submit", function(e) {
     e.preventDefault();
 
-    const email = document.getElementById("email-input").value;
-    const password = document.getElementById("password-input").value;
-    const checkSession = document.getElementById("session-check").checked;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const session = document.getElementById("session").checked;
 
     const account = getAccount(email);
 
-    if(!account) {
-        alert("Opps! Verifique usuario ou a senha.");
+    if (!account) {
+        alert("Oops! Verifique o usuário ou a senha.");
         return;
     }
 
-    if(account) {
-        if(account.password !== password) {
-            alert("Opps! Verifique usuario ou a senha.");
+    if (account) {
+        if (account.password !== password) {
+            alert("Oops! Verifique o usuário ou a senha.");
             return;
         }
 
-        saveSession(email, checkSession);
+        saveSession(email, session)
 
         window.location.href = "home.html";
     }
-
 });
 
-//CRIAR CONTA
+
+//criar conta
 document.getElementById("create-form").addEventListener("submit", function(e) {
     e.preventDefault();
 
     const email = document.getElementById("email-create-input").value;
     const password = document.getElementById("password-create-input").value;
 
-    if(email.length < 5) {
-        alert("Email invalido!");
+    if (email.length < 5) {
+        alert("Preencha o campo com um e-mail válido.");
         return;
     }
 
-    if(password.length < 4) {
-        alert("Preença a senha com no minimi 4 digitos.");
+    if (password.length < 4) {
+        alert("Preencha a senha com no mínimo 4 dígitos.");
         return;
     }
 
@@ -57,19 +58,20 @@ document.getElementById("create-form").addEventListener("submit", function(e) {
 
     myModal.hide();
 
-    alert("Conta criada com sucesso!");
+    alert("Conta criada com sucesso.");
 });
 
+//checar login
 function checkLogged() {
-    if(session) {
+    if (session) {
         sessionStorage.setItem("logged", session);
         logged = session;
     }
 
-    if(logged) {
+    if (logged) {
         saveSession(logged, session);
 
-        window.location.href = "home.html"
+        window.location.href = "home.html";
     }
 }
 
@@ -78,7 +80,7 @@ function saveAccount(data) {
 }
 
 function saveSession(data, saveSession) {
-    if(saveSession) {
+    if (saveSession) {
         localStorage.setItem("session", data);
     }
 
@@ -88,7 +90,7 @@ function saveSession(data, saveSession) {
 function getAccount(key) {
     const account = localStorage.getItem(key);
 
-    if(account) {
+    if (account) {
         return JSON.parse(account);
     }
 
